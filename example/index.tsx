@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Formik, Field, FormikContext } from 'formik';
+import { Formik, Field } from 'formik';
 import { FormikSideEffects, SideEffects } from '../src';
 
 const initialValues = { locked: false, width: 25, height: 50 };
