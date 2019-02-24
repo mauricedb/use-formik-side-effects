@@ -17,11 +17,8 @@ const ShapeEditor = () => {
     >
       {({ values }) => (
         <div>
-          <FormikSideEffect
-            onChange={(
-              previousFormik,
-              currentFormik: FormikContext<Shape>
-            ) => {
+          <FormikSideEffect<Shape>
+            onChange={(previousFormik, currentFormik) => {
               const { values: previousValues } = previousFormik;
               const { values: currentValues, setFieldValue } = currentFormik;
 
