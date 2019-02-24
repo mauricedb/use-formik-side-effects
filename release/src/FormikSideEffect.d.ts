@@ -1,7 +1,7 @@
 /// <reference types="react" />
-import { FormikContext } from 'formik';
+import { SideEffect } from './useFormikSideEffects';
 declare type FormikSideEffectProps<T> = {
-    onChange: (previousFormik: FormikContext<T>, currentFormik: FormikContext<T>) => void;
+    determineSideEffects: SideEffect<T>;
 };
-export declare const FormikSideEffect: <T extends {}>({ onChange }: FormikSideEffectProps<T>) => JSX.Element;
+export declare const FormikSideEffect: <T extends {}>({ determineSideEffects: determineSideEffect }: FormikSideEffectProps<T>) => JSX.Element;
 export {};

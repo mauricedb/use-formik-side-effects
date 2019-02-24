@@ -1,37 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Formik, Field, FormikContext } from 'formik';
-import { FormikSideEffect } from '../src';
+import { FormikSideEffects, SideEffects } from '../src';
 
-type Shape = {
-  locked: boolean;
-  width: number;
-  height: number;
+const initialValues = { locked: false, width: 25, height: 50 };
+type Shape = typeof initialValues;
+
+const determineSideEffects: SideEffects<Shape> = (
+  currentValues,
+  previousValues
+): Shape | null => {
+  if (currentValues.locked && !previousValues.locked) {
+    return { ...currentValues, height: currentValues.width };
+  } else if (currentValues.locked) {
+    if (currentValues.width !== previousValues.width) {
+      return { ...currentValues, height: currentValues.width };
+    } else if (currentValues.height !== previousValues.height) {
+      return { ...currentValues, width: currentValues.height };
+    }
+  }
+
+  return null;
 };
 
 const ShapeEditor = () => {
   return (
-    <Formik<Shape>
-      initialValues={{ locked: false, width: 25, height: 50 }}
-      onSubmit={() => {}}
-    >
-      {({ values }) => (
+    <Formik<Shape> initialValues={initialValues} onSubmit={() => {}}>
+      {formik => (
         <div>
-          <FormikSideEffect<Shape>
-            onChange={(previousFormik, currentFormik) => {
-              const { values: previousValues } = previousFormik;
-              const { values: currentValues, setFieldValue } = currentFormik;
-
-              if (currentValues.locked && !previousValues.locked) {
-                setFieldValue('height', currentValues.width);
-              } else if (currentValues.locked) {
-                if (currentValues.width !== previousValues.width) {
-                  setFieldValue('height', currentValues.width);
-                } else if (currentValues.height !== previousValues.height) {
-                  setFieldValue('width', currentValues.height);
-                }
-              }
-            }}
+          <FormikSideEffects<Shape>
+            determineSideEffects={determineSideEffects}
           />
           <h2>Shape Editor</h2>
           <div>
@@ -49,7 +47,7 @@ const ShapeEditor = () => {
           </div>
           <hr />
           <h3>Formik Values</h3>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
+          <pre>{JSON.stringify(formik, null, 2)}</pre>
         </div>
       )}
     </Formik>

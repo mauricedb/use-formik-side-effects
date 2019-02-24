@@ -1,2 +1,2 @@
-export * from './FormikSideEffect';
-export * from './useFormikSideEffect';
+export * from './FormikSideEffects';
+export * from './useFormikSideEffects';
