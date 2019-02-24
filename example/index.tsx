@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Formik, Field } from 'formik';
-import { FormikSideEffects, SideEffects } from '../src';
+import { FormikSideEffects, SideEffects } from '..';
 
 const initialValues = { locked: false, width: 25, height: 50 };
 type Shape = typeof initialValues;
