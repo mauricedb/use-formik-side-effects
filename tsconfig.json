@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "lib": ["es2015", "dom"],
+    "strict": true,
+    "target": "es5"
+  }
+}

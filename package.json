@@ -6,6 +6,7 @@
   "umd:main": "release/index.umd.js",
   "source": "src/index.ts",
   "scripts": {
+    "start": "parcel example/index.html",
     "build": "microbundle",
     "dev": "microbundle watch",
     "test": "microbundle"
@@ -14,6 +15,11 @@
   "author": "Maurice de Beijer <maurice.de.beijer@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "microbundle": "^0.10.1"
+    "@types/react": "^16.8.4",
+    "@types/react-dom": "^16.8.2",
+    "microbundle": "^0.10.1",
+    "parcel-bundler": "^1.11.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   }
 }
