@@ -1,0 +1,9 @@
+{
+  "name": "use-formik-side-effects",
+  "description": "Formik side effects hook and wrapper component",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:mauricedb/use-formik-side-effects.git",
+  "author": "Maurice de Beijer <maurice.de.beijer@gmail.com>",
+  "license": "MIT"
+}
