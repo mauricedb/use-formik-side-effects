@@ -10,19 +10,23 @@
     "start": "parcel example/index.html",
     "build": "microbundle",
     "dev": "microbundle watch",
-    "test": "microbundle"
+    "test": "jest"
   },
   "repository": "git@github.com:mauricedb/use-formik-side-effects.git",
   "author": "Maurice de Beijer <maurice.de.beijer@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^16.8.4",
+    "@types/jest": "^24.0.9",
+    "@types/react": "^16.8.7",
     "@types/react-dom": "^16.8.2",
     "formik": "^1.5.1",
+    "jest": "^24.3.1",
     "microbundle": "^0.11.0",
     "parcel-bundler": "^1.11.0",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react-dom": "^16.8.3",
+    "react-testing-library": "^6.0.0",
+    "ts-jest": "^24.0.0"
   },
   "peerDependencies": {
     "formik": ">= 1.5.0",
