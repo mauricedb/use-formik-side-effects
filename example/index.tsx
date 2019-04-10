@@ -30,12 +30,21 @@ const determineSideEffects: SideEffects<Shape> = (
 
 const determineAsyncSideEffect: AsyncSideEffects<Shape> = (
   currentValues,
-  previousValues
+  previousValues,
+  signal
 ) => {
-  return new Promise<AsyncSideEffect<Shape>[]>(resolve => {
+  return new Promise<AsyncSideEffect<Shape>[]>((resolve, reject) => {
+    signal.onabort = () => {
+      const abortError = new DOMException('Aborted', 'AbortError');
+      reject(abortError);
+    };
+
+    if (currentValues.width === previousValues.width) {
+      resolve();
+    }
+
     setTimeout(() => {
       let sideEffects: AsyncSideEffect<Shape>[] = [];
-
       const area = currentValues.width * currentValues.height;
 
       if (area !== currentValues.area) {
@@ -43,7 +52,7 @@ const determineAsyncSideEffect: AsyncSideEffects<Shape> = (
       }
 
       resolve(sideEffects);
-    }, 1000);
+    }, 2500);
   });
 };
 

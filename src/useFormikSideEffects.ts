@@ -7,27 +7,40 @@ export type AsyncSideEffect<T> = { field: keyof T & string; value: any };
 
 export type AsyncSideEffects<T> = (
   currentValues: T,
-  previousValues: T
+  previousValues: T,
+  signal: AbortSignal
 ) => Promise<AsyncSideEffect<T>[]>;
 
 async function checkAsyncSideEffect<T>(
   currentFormik: FormikContext<T>,
   previousFormik: FormikContext<T>,
-  determineAsyncSideEffect: AsyncSideEffects<T>
+  determineAsyncSideEffect: AsyncSideEffects<T>,
+  signal: AbortSignal
 ) {
-  const sideEffects = await determineAsyncSideEffect(
-    currentFormik.values,
-    previousFormik.values
-  );
-console.log(sideEffects)
-  if (sideEffects) {
-    sideEffects.forEach((sideEffect, index) => {
-      currentFormik.setFieldValue(
-        sideEffect.field,
-        sideEffect.value,
-        index === sideEffects.length - 1
-      );
-    });
+  try {
+    const sideEffects = await determineAsyncSideEffect(
+      currentFormik.values,
+      previousFormik.values,
+      signal
+    );
+
+    if (sideEffects) {
+      sideEffects.forEach((sideEffect, index) => {
+        currentFormik.setFieldValue(
+          sideEffect.field,
+          sideEffect.value,
+          index === sideEffects.length - 1
+        );
+      });
+      console.log('Success', (currentFormik.values as any).width);
+    }
+  } catch (err) {
+    const error = err.name !== 'AbortError' ? err : null;
+    if (error) {
+      throw error;
+    } else {
+      console.log('AbortError', (currentFormik.values as any).width);
+    }
   }
 }
 
@@ -37,6 +50,7 @@ export const useFormikSideEffects = <T extends {}>(
   determineAsyncSideEffect?: AsyncSideEffects<T>
 ) => {
   var previous = React.useRef(currentFormik);
+  var ac = React.useRef<AbortController | null>(null);
 
   React.useEffect(() => {
     const previousFormik = previous.current;
@@ -54,10 +68,16 @@ export const useFormikSideEffects = <T extends {}>(
       }
 
       if (determineAsyncSideEffect) {
+        if (ac.current) {
+          ac.current.abort();
+        }
+        ac.current = new AbortController();
+
         checkAsyncSideEffect(
           currentFormik,
           previousFormik,
-          determineAsyncSideEffect
+          determineAsyncSideEffect,
+          ac.current.signal
         );
       }
     }
