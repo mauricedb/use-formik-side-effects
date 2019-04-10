@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Formik, Field } from 'formik';
-import { FormikSideEffects, SideEffects } from '..';
+import {
+  FormikSideEffects,
+  SideEffects,
+  AsyncSideEffects,
+  AsyncSideEffect
+} from '..';
 
-const initialValues = { locked: false, width: 25, height: 50 };
+const initialValues = { locked: false, width: 25, height: 50, area: 25 * 50 };
 type Shape = typeof initialValues;
 
 const determineSideEffects: SideEffects<Shape> = (
@@ -23,6 +28,25 @@ const determineSideEffects: SideEffects<Shape> = (
   return null;
 };
 
+const determineAsyncSideEffect: AsyncSideEffects<Shape> = (
+  currentValues,
+  previousValues
+) => {
+  return new Promise<AsyncSideEffect<Shape>[]>(resolve => {
+    setTimeout(() => {
+      let sideEffects: AsyncSideEffect<Shape>[] = [];
+
+      const area = currentValues.width * currentValues.height;
+
+      if (area !== currentValues.area) {
+        sideEffects = [...sideEffects, { field: 'area', value: area }];
+      }
+
+      resolve(sideEffects);
+    }, 1000);
+  });
+};
+
 const ShapeEditor = () => {
   return (
     <Formik<Shape> initialValues={initialValues} onSubmit={() => {}}>
@@ -30,6 +54,7 @@ const ShapeEditor = () => {
         <div>
           <FormikSideEffects<Shape>
             determineSideEffects={determineSideEffects}
+            determineAsyncSideEffect={determineAsyncSideEffect}
           />
           <h2>Shape Editor</h2>
           <div>
@@ -44,6 +69,9 @@ const ShapeEditor = () => {
 
           <div>
             Height: <Field name="height" type="number" />
+          </div>
+          <div>
+            Area: <Field name="area" type="number" disabled />
           </div>
           <hr />
           <h3>Formik Values</h3>
