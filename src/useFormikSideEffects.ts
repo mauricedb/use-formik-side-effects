@@ -3,7 +3,7 @@ import { FormikContext } from 'formik';
 
 export type SideEffects<T> = (currentValues: T, previousValues: T) => T | null;
 
-export type AsyncSideEffect<T> = { field: keyof T & string; value: any };
+export type AsyncSideEffect<T> = { field: string; value: any };
 
 export type AsyncSideEffects<T> = (
   currentValues: T,
@@ -25,21 +25,19 @@ async function checkAsyncSideEffect<T>(
     );
 
     if (sideEffects) {
+      const { setFieldValue } = currentFormik as FormikContext<any>;
       sideEffects.forEach((sideEffect, index) => {
-        currentFormik.setFieldValue(
+        setFieldValue(
           sideEffect.field,
           sideEffect.value,
           index === sideEffects.length - 1
         );
       });
-      console.log('Success', (currentFormik.values as any).width);
     }
   } catch (err) {
     const error = err.name !== 'AbortError' ? err : null;
     if (error) {
       throw error;
-    } else {
-      console.log('AbortError', (currentFormik.values as any).width);
     }
   }
 }
@@ -50,7 +48,7 @@ export const useFormikSideEffects = <T extends {}>(
   determineAsyncSideEffect?: AsyncSideEffects<T>
 ) => {
   var previous = React.useRef(currentFormik);
-  var ac = React.useRef<AbortController | null>(null);
+  var abortController = React.useRef<AbortController | null>(null);
 
   React.useEffect(() => {
     const previousFormik = previous.current;
@@ -68,16 +66,16 @@ export const useFormikSideEffects = <T extends {}>(
       }
 
       if (determineAsyncSideEffect) {
-        if (ac.current) {
-          ac.current.abort();
+        if (abortController.current) {
+          abortController.current.abort();
         }
-        ac.current = new AbortController();
+        abortController.current = new AbortController();
 
         checkAsyncSideEffect(
           currentFormik,
           previousFormik,
           determineAsyncSideEffect,
-          ac.current.signal
+          abortController.current.signal
         );
       }
     }
