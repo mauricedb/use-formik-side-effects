@@ -1,18 +1,18 @@
-import React from 'react';
-import { Formik, Field } from 'formik';
+import React from "react";
+import { Formik, Field } from "formik";
 import {
   render,
   cleanup,
   waitForElement,
   fireEvent
-} from 'react-testing-library';
+} from "@testing-library/react";
 
 import {
   SideEffects,
   FormikSideEffects,
   AsyncSideEffects,
   AsyncSideEffect
-} from '.';
+} from ".";
 
 afterEach(cleanup);
 
@@ -41,7 +41,7 @@ const determineAsyncSideEffect: AsyncSideEffects<Shape> = (
       const area = currentValues.width * currentValues.height;
 
       if (area !== currentValues.area.size) {
-        sideEffects.push({ field: 'area.size', value: area });
+        sideEffects.push({ field: "area.size", value: area });
       }
 
       resolve(sideEffects);
@@ -74,30 +74,30 @@ const TestEditor = () => {
   );
 };
 
-test('Run synchronous side effect', () => {
+test("Run synchronous side effect", () => {
   const { getByLabelText, getByText } = render(<TestEditor />);
 
-  getByText('Width: 1');
-  getByText('Height: 1');
+  getByText("Width: 1");
+  getByText("Height: 1");
 
-  fireEvent.change(getByLabelText('Width:'), { target: { value: 2 } });
+  fireEvent.change(getByLabelText("Width:"), { target: { value: 2 } });
 
-  getByText('Width: 2');
-  getByText('Height: 2');
+  getByText("Width: 2");
+  getByText("Height: 2");
 });
 
-test('Run asynchronous side effect', async () => {
+test("Run asynchronous side effect", async () => {
   const { getByLabelText, getByText } = render(<TestEditor />);
 
-  getByText('Width: 1');
-  getByText('Height: 1');
-  getByText('Area: 1');
+  getByText("Width: 1");
+  getByText("Height: 1");
+  getByText("Area: 1");
 
-  fireEvent.change(getByLabelText('Width:'), { target: { value: 2 } });
+  fireEvent.change(getByLabelText("Width:"), { target: { value: 2 } });
 
-  getByText('Width: 2');
-  getByText('Height: 2');
-  getByText('Area: 1');
+  getByText("Width: 2");
+  getByText("Height: 2");
+  getByText("Area: 1");
 
-  await waitForElement(() => getByText('Area: 4'));
+  await waitForElement(() => getByText("Area: 4"));
 });
