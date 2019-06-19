@@ -1,7 +1,7 @@
 {
   "name": "use-formik-side-effects",
   "description": "Formik side effects hook and wrapper component",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "main": "release/index.js",
   "umd:main": "release/index.umd.js",
   "source": "src/index.ts",
