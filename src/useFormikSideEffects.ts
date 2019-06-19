@@ -53,7 +53,6 @@ export const useFormikSideEffects = <T extends {}>(
   React.useEffect(() => {
     const previousFormik = previous.current;
 
-    if (previousFormik.values !== currentFormik.values) {
       if (determineSideEffect) {
         const sideEffect = determineSideEffect(
           currentFormik.values,
@@ -78,7 +77,6 @@ export const useFormikSideEffects = <T extends {}>(
           abortController.current.signal
         );
       }
-    }
 
     previous.current = currentFormik;
   }, [currentFormik, determineSideEffect, determineAsyncSideEffect]);
