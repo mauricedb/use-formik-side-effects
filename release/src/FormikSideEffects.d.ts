@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { SideEffects, AsyncSideEffects } from './useFormikSideEffects';
 declare type FormikSideEffectProps<T> = {
     determineSideEffects: SideEffects<T>;
