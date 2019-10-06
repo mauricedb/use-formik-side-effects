@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Formik, Field } from 'formik';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Formik, Field } from "formik";
 import {
   FormikSideEffects,
   SideEffects,
   AsyncSideEffects,
   AsyncSideEffect
-} from '..';
+} from "..";
 
 const initialValues = { locked: false, width: 25, height: 50, area: 25 * 50 };
 type Shape = typeof initialValues;
@@ -35,20 +35,16 @@ const determineAsyncSideEffect: AsyncSideEffects<Shape> = (
 ) => {
   return new Promise<AsyncSideEffect<Shape>[]>((resolve, reject) => {
     signal.onabort = () => {
-      const abortError = new DOMException('Aborted', 'AbortError');
+      const abortError = new DOMException("Aborted", "AbortError");
       reject(abortError);
     };
-
-    if (currentValues.width === previousValues.width) {
-      resolve();
-    }
 
     setTimeout(() => {
       let sideEffects: AsyncSideEffect<Shape>[] = [];
       const area = currentValues.width * currentValues.height;
 
       if (area !== currentValues.area) {
-        sideEffects = [...sideEffects, { field: 'area', value: area }];
+        sideEffects = [...sideEffects, { field: "area", value: area }];
       }
 
       resolve(sideEffects);
@@ -91,4 +87,4 @@ const ShapeEditor = () => {
   );
 };
 
-ReactDOM.render(<ShapeEditor />, document.getElementById('root'));
+ReactDOM.render(<ShapeEditor />, document.getElementById("root"));
