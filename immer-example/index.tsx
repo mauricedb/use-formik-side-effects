@@ -51,7 +51,7 @@ const determineAsyncSideEffect: AsyncSideEffects<Shape> = (
         draft.area = draft.width * draft.height;
       });
 
-      const sideEffects: AsyncSideEffect<Shape>[] = patches.map(
+      const sideEffects: AsyncSideEffect[] = patches.map(
         (patch): AsyncSideEffect => ({
           field: patch.path.join("."),
           value: patch.value
