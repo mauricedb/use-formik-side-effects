@@ -8,6 +8,7 @@
   "types": "release/src/index.d.ts",
   "scripts": {
     "start": "parcel example/index.html",
+    "start:2": "parcel immer-example/index.html",
     "build": "microbundle",
     "dev": "microbundle watch",
     "test": "jest"
@@ -21,6 +22,7 @@
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.1",
     "formik": "1.5.8",
+    "immer": "^4.0.1",
     "jest": "24.9.0",
     "microbundle": "0.11.0",
     "parcel-bundler": "1.12.3",
