@@ -25,7 +25,7 @@
     "immer": "^4.0.1",
     "jest": "24.9.0",
     "microbundle": "0.11.0",
-    "parcel-bundler": "1.12.3",
+    "parcel-bundler": "1.12.4",
     "react": "16.10.2",
     "react-dom": "16.10.2",
     "ts-jest": "24.1.0"
