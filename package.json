@@ -27,7 +27,7 @@
     "microbundle": "0.11.0",
     "parcel-bundler": "1.12.3",
     "react": "16.11.0",
-    "react-dom": "16.10.2",
+    "react-dom": "16.11.0",
     "ts-jest": "24.1.0"
   },
   "peerDependencies": {
