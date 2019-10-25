@@ -21,7 +21,7 @@
     "@types/jest": "24.0.19",
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.2",
-    "formik": "1.5.8",
+    "formik": "2.0.1",
     "immer": "^4.0.1",
     "jest": "24.9.0",
     "microbundle": "0.11.0",
