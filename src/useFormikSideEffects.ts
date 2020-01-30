@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormikContext } from 'formik';
+import React from "react";
+import { FormikContextType } from "formik";
 
 export type SideEffects<T> = (currentValues: T, previousValues: T) => T | null;
 
@@ -12,8 +12,8 @@ export type AsyncSideEffects<T> = (
 ) => Promise<AsyncSideEffect<T>[]>;
 
 async function checkAsyncSideEffect<T>(
-  currentFormik: FormikContext<T>,
-  previousFormik: FormikContext<T>,
+  currentFormik: FormikContextType<T>,
+  previousFormik: FormikContextType<T>,
   determineAsyncSideEffect: AsyncSideEffects<T>,
   signal: AbortSignal
 ) {
@@ -25,7 +25,7 @@ async function checkAsyncSideEffect<T>(
     );
 
     if (sideEffects) {
-      const { setFieldValue } = currentFormik as FormikContext<any>;
+      const { setFieldValue } = currentFormik as FormikContextType<any>;
       sideEffects.forEach((sideEffect, index) => {
         setFieldValue(
           sideEffect.field,
@@ -35,7 +35,7 @@ async function checkAsyncSideEffect<T>(
       });
     }
   } catch (err) {
-    const error = err.name !== 'AbortError' ? err : null;
+    const error = err.name !== "AbortError" ? err : null;
     if (error) {
       throw error;
     }
@@ -43,7 +43,7 @@ async function checkAsyncSideEffect<T>(
 }
 
 export const useFormikSideEffects = <T extends {}>(
-  currentFormik: FormikContext<T>,
+  currentFormik: FormikContextType<T>,
   determineSideEffect: SideEffects<T>,
   determineAsyncSideEffect?: AsyncSideEffects<T>
 ) => {
@@ -53,30 +53,30 @@ export const useFormikSideEffects = <T extends {}>(
   React.useEffect(() => {
     const previousFormik = previous.current;
 
-      if (determineSideEffect) {
-        const sideEffect = determineSideEffect(
-          currentFormik.values,
-          previousFormik.values
-        );
+    if (determineSideEffect) {
+      const sideEffect = determineSideEffect(
+        currentFormik.values,
+        previousFormik.values
+      );
 
-        if (sideEffect) {
-          currentFormik.setValues(sideEffect);
-        }
+      if (sideEffect) {
+        currentFormik.setValues(sideEffect);
       }
+    }
 
-      if (determineAsyncSideEffect) {
-        if (abortController.current) {
-          abortController.current.abort();
-        }
-        abortController.current = new AbortController();
-
-        checkAsyncSideEffect(
-          currentFormik,
-          previousFormik,
-          determineAsyncSideEffect,
-          abortController.current.signal
-        );
+    if (determineAsyncSideEffect) {
+      if (abortController.current) {
+        abortController.current.abort();
       }
+      abortController.current = new AbortController();
+
+      checkAsyncSideEffect(
+        currentFormik,
+        previousFormik,
+        determineAsyncSideEffect,
+        abortController.current.signal
+      );
+    }
 
     previous.current = currentFormik;
   }, [currentFormik, determineSideEffect, determineAsyncSideEffect]);

@@ -1,10 +1,10 @@
-import React from 'react';
-import { FormikConsumer, FormikContext } from 'formik';
+import React from "react";
+import { FormikConsumer, FormikContextType } from "formik";
 import {
   useFormikSideEffects,
   SideEffects,
   AsyncSideEffects
-} from './useFormikSideEffects';
+} from "./useFormikSideEffects";
 
 type FormikSideEffectProps<T> = {
   determineSideEffects: SideEffects<T>;
@@ -16,7 +16,7 @@ const FormikSideEffectChild = <T extends {}>({
   determineSideEffects,
   determineAsyncSideEffect
 }: FormikSideEffectProps<T> & {
-  formik: FormikContext<T>;
+  formik: FormikContextType<T>;
 }) => {
   useFormikSideEffects<T>(
     formik,
