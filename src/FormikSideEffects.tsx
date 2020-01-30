@@ -9,19 +9,22 @@ import {
 type FormikSideEffectProps<T> = {
   determineSideEffects: SideEffects<T>;
   determineAsyncSideEffect?: AsyncSideEffects<T>;
+  shouldValidate?: boolean;
 };
 
 const FormikSideEffectChild = <T extends {}>({
   formik,
   determineSideEffects,
-  determineAsyncSideEffect
+  determineAsyncSideEffect,
+  shouldValidate
 }: FormikSideEffectProps<T> & {
   formik: FormikContextType<T>;
 }) => {
   useFormikSideEffects<T>(
     formik,
     determineSideEffects,
-    determineAsyncSideEffect
+    determineAsyncSideEffect,
+    shouldValidate
   );
 
   return null;

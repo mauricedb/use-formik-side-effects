@@ -15,7 +15,8 @@ async function checkAsyncSideEffect<T>(
   currentFormik: FormikContextType<T>,
   previousFormik: FormikContextType<T>,
   determineAsyncSideEffect: AsyncSideEffects<T>,
-  signal: AbortSignal
+  signal: AbortSignal,
+  shouldValidate: boolean
 ) {
   try {
     const sideEffects = await determineAsyncSideEffect(
@@ -30,7 +31,7 @@ async function checkAsyncSideEffect<T>(
         setFieldValue(
           sideEffect.field,
           sideEffect.value,
-          index === sideEffects.length - 1
+          shouldValidate && index === sideEffects.length - 1
         );
       });
     }
@@ -45,7 +46,8 @@ async function checkAsyncSideEffect<T>(
 export const useFormikSideEffects = <T extends {}>(
   currentFormik: FormikContextType<T>,
   determineSideEffect: SideEffects<T>,
-  determineAsyncSideEffect?: AsyncSideEffects<T>
+  determineAsyncSideEffect?: AsyncSideEffects<T>,
+  shouldValidate?: boolean
 ) => {
   var previous = React.useRef(currentFormik);
   var abortController = React.useRef<AbortController | null>(null);
@@ -60,7 +62,7 @@ export const useFormikSideEffects = <T extends {}>(
       );
 
       if (sideEffect) {
-        currentFormik.setValues(sideEffect);
+        currentFormik.setValues(sideEffect, shouldValidate);
       }
     }
 
@@ -74,7 +76,8 @@ export const useFormikSideEffects = <T extends {}>(
         currentFormik,
         previousFormik,
         determineAsyncSideEffect,
-        abortController.current.signal
+        abortController.current.signal,
+        typeof shouldValidate === "boolean" ? shouldValidate : true
       );
     }
 

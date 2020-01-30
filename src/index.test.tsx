@@ -57,6 +57,7 @@ const TestEditor = () => {
           <FormikSideEffects<Shape>
             determineSideEffects={determineSideEffects}
             determineAsyncSideEffect={determineAsyncSideEffect}
+            shouldValidate={true}
           />
           <div>
             <label htmlFor="width">Width:</label>
