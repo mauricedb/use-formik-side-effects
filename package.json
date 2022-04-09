@@ -19,7 +19,7 @@
   "devDependencies": {
     "@testing-library/react": "13.0.0",
     "@types/jest": "27.4.1",
-    "@types/react": "17.0.43",
+    "@types/react": "18.0.1",
     "@types/react-dom": "17.0.14",
     "formik": "2.2.9",
     "immer": "9.0.12",
