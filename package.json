@@ -20,14 +20,14 @@
     "@testing-library/react": "15.0.6",
     "@types/jest": "27.4.1",
     "@types/react": "18.3.1",
-    "@types/react-dom": "18.2.25",
+    "@types/react-dom": "18.3.0",
     "formik": "2.4.6",
     "immer": "10.1.1",
     "jest": "26.6.3",
     "microbundle": "0.15.1",
     "parcel-bundler": "1.12.5",
     "react": "18.3.1",
-    "react-dom": "18.2.0",
+    "react-dom": "18.3.1",
     "ts-jest": "26.5.6"
   },
   "peerDependencies": {
