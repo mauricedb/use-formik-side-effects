@@ -20,7 +20,7 @@
     "@testing-library/react": "16.2.0",
     "@types/jest": "29.5.14",
     "@types/react": "19.0.9",
-    "@types/react-dom": "19.0.3",
+    "@types/react-dom": "19.0.4",
     "formik": "2.4.6",
     "immer": "10.1.1",
     "jest": "29.7.0",
