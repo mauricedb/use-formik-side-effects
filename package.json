@@ -28,7 +28,7 @@
     "parcel-bundler": "1.12.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "ts-jest": "29.3.3"
+    "ts-jest": "29.3.4"
   },
   "peerDependencies": {
     "formik": ">=2.0.0",
