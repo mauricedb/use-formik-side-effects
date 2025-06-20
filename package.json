@@ -23,7 +23,7 @@
     "@types/react-dom": "19.1.6",
     "formik": "2.4.6",
     "immer": "10.1.1",
-    "jest": "30.0.1",
+    "jest": "30.0.2",
     "microbundle": "0.15.1",
     "parcel-bundler": "1.12.5",
     "react": "19.1.0",
